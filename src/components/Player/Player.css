@@ -1,0 +1,18 @@
+.player-radio{
+    
+}
+.container-audio {
+    font-family: 'Allerta', arial, Tahoma;
+    width: 66%;
+    height: auto;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #444;
+    margin: 20px auto;
+    overflow: hidden;
+}
+audio {
+  width:100%;
+}
+
+

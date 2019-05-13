@@ -1,0 +1,56 @@
+.top-menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #c9c9c9;
+    background: #ffffff;
+    box-shadow:
+    0px 2px 4px -1px rgba(0,0,0,0.2), 
+    0px 4px 5px 0px rgba(0,0,0,0.14), 
+    0px 1px 10px 0px rgba(0,0,0,0.1) inset;
+}
+
+.top-inpt{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
+    margin-right: 10px;
+    outline: none;
+}
+
+
+
+.btn{
+    padding: 7px 15px;
+    text-transform: uppercase;
+    background: #6ea9f6;
+    border:none;
+    border-radius: 5px;
+    color:#fff;
+    outline:none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover{
+    cursor: pointer;
+    background: rgba(101, 101, 255, 0.376);
+}
+
+.green {
+    background: rgb(25, 238, 60);
+}
+
+.yellow{
+    background: rgb(245, 189, 4);
+}
+
+.blue{
+    background: rgb(4, 28, 245);
+}
+
+.fiolet{
+    background: #9737f1;
+    margin-right:10px; 
+}

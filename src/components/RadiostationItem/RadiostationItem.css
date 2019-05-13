@@ -1,0 +1,51 @@
+.radio-list-item{
+    width: 100%;
+    border-bottom: 1px solid #c9c9c9;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.radio-list-item:hover{
+    background: #c9c9c9;
+}
+.radio-item{
+    margin-right: 5%;
+    padding: 10px;
+}
+
+.radio-list-item:hover{
+    cursor:  pointer;
+}
+
+.text{
+    width: 50%;
+}
+
+
+.radio-item img {
+    width: 40px;
+    height: 40px;
+}
+
+.action-block{
+    text-align: right;
+}
+
+.list-btn{
+    background:inherit;
+    border: none;
+    font-size: 22px;
+    transition: all 0.2s ease-in-out;
+}
+
+.list-btn:last-child:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.list-btn:first-child:hover{
+    cursor: pointer;
+    color: rgb(244, 248, 6);
+}
