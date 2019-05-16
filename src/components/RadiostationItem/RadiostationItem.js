@@ -14,6 +14,16 @@ class RadiostationItem extends Component{
         visible:false,
         message:''
     }
+    addFocus=(id)=>{
+        let arr = document.getElementsByClassName('radio-list-item');
+        for(let item of arr){
+            const itemId = item.getAttribute('data-id');
+            item.classList.remove('active');
+            if(id===itemId){
+                item.classList.add('active');
+            }
+        }
+    }
 
     changeCurrentStation=(e)=>{
         const {changeCurrentStation} = this.props;
@@ -39,6 +49,7 @@ class RadiostationItem extends Component{
             name:nameStation,
             stream:src
         }
+        this.addFocus(id);
         changeCurrentStation(params);
     }
 
@@ -85,7 +96,7 @@ class RadiostationItem extends Component{
         return (
             <>
             <div className='radio-list-item' data-id={id} data-steam={stream} data-name={name} onClick={this.changeCurrentStation}>
-                <span className='radio-id'>{id}</span>
+                <span  className='radio-id'>{id}</span>
                 <span className='radio-container-image'>
                     <img src={image} className='radio-image' alt={name} />
                 </span>
@@ -109,4 +120,10 @@ class RadiostationItem extends Component{
     }
 }  
 
-export default connect(state=>({mode:getMode(state)}),{changeCurrentStation,fetchRadioListRequest,fetchFavRadioListRequest})(RadiostationItem);
+export default connect(state=>({
+    mode:getMode(state)
+}),{
+    changeCurrentStation,
+    fetchRadioListRequest,
+    fetchFavRadioListRequest
+})(RadiostationItem);

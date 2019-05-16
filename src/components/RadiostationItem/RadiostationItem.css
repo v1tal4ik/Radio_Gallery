@@ -11,6 +11,10 @@
     background: #c9c9c9;
 }
 
+.active{
+    background: #b5f17d;
+}
+
 .radio-item{
     margin-right: 15px;
     padding: 10px;

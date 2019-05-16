@@ -7,6 +7,6 @@ module.exports = async (req, res, next) => {
     if(req.body.id == result.id){
         res.status(200).json(`${result.name} - station was deleted on favourite list :)`);
     }else{
-        res.status(418).json(`${result.name} - station was failed deleted on favourite list :(`);
+        res.status(404).json(`${result.name} - station was failed deleted on favourite list :(`);
     }
 }

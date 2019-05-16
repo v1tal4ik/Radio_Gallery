@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 export const getListRadio = ()=>{
     return fetch('/api/v1.0/listRadio',{
         method:'GET'
@@ -8,6 +10,35 @@ export const getListRadio = ()=>{
     .then(result=>result)
     .catch(err=>[]);
  }
+
+export const addNewRadioStation=(obj)=>{
+   return axios.post(`/api/v1.0/listRadio`,{obj})
+   .then(result=>result.data)
+   .catch(err=>"Sorry there was error :(");
+}
+
+export const editRadioStationById=(obj)=>{
+   let id = obj.id;
+   return axios.put(`/api/v1.0/listRadio/${id}`,{obj})
+   .then(result=>result.data)
+   .catch(err=>'Sorry, there was error:(');
+}
+
+export const deleteRadioStation=(id)=>{
+   return fetch(`/api/v1.0/listRadio/${id}`,{
+      method:"DELETE",
+      headers:{
+         "Content-type":"application/json; charset=UTF-8"
+      }, 
+      body:JSON.stringify({id})
+   })
+   .then(result=>result.json())
+   .then(result=>result)
+   .catch(err=>err);
+}
+
+
+
 
  export const getFavListRadio = ()=>{
     return fetch('/api/v1.0/listRadio/favourite',{
@@ -30,30 +61,8 @@ export const getListRadio = ()=>{
     .catch(err=>err);
  }
 
- export const deleteRadioStation=(id)=>{
-   return fetch(`/api/v1.0/listRadio/${id}`,{
-      method:"DELETE",
-      headers:{
-         "Content-type":"application/json; charset=UTF-8"
-      }, 
-      body:JSON.stringify({id})
-   })
-   .then(result=>result.json())
-   .then(result=>result)
-   .catch(err=>err);
-}
 
- export const addNewRadioStation=(obj)=>{
-    return axios.post(`/api/v1.0/listRadio`,{obj})
-    .then(result=>result.data)
-    .catch(err=>"Sorry there was error :(");
- }
 
- export const editRadioStationById=(obj)=>{
-   console.log('obj',obj);
-    let foo = setTimeout(()=>('Editing done'),3000);
-    return foo;
-}
 
 
 

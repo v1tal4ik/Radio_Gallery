@@ -4,6 +4,7 @@ import {
     changeRadioSkinByDefault,
     changeCurrentStation,
     changeCurrentMode,
+    changeInputValue,
     fetchRadioListRequest,
     fetchRadioListSuccess,
     fetchRadioListFailure,
@@ -44,6 +45,8 @@ export const mode = handleActions({
 
 export const inputValue = handleActions({
     [fetchRadioListRequest] : ()=>[],
+    [changeInputValue] : (_state,action)=>action.payload
+    
 
 },'');
 
@@ -58,6 +61,7 @@ export const currentStation = handleActions({
 
 
 export const getIsLoading=(state)=>state.isLoading;
+export const getinputValue=(state)=>state.inputValue;
 export const getSkin=(state)=>state.skin;
 export const getMode=(state)=>state.mode;
 export const getListRadio=(state)=>state.listRadio;

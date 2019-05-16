@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import Rodal from 'rodal';
 import AddModal from '../AddModal';
+import EditModal from '../EditModal';
 import { connect } from 'react-redux';
 import {
     changeRadioSkin,
     changeRadioSkinByDefault,
     changeCurrentMode,
+    changeInputValue,
     fetchRadioListRequest,
     fetchFavRadioListRequest
     } from '../../modules/actions';
@@ -17,7 +19,8 @@ class TopMenu extends Component{
 
     state={
         visible:false,
-        edit:false
+        modalType:'',
+        input:''
     }
 
     handleChangeRadioSkin=()=>{
@@ -48,13 +51,18 @@ class TopMenu extends Component{
             changeCurrentMode('all list');
         }
     }
-    handleOpenAddModal=()=>{
-        this.setState({visible:true,edit:false});
+    callHandleChangeInput=()=>{
+        const{changeInputValue} = this.props;
+        changeInputValue(this.state.input.toLowerCase());
     }
+    handleChangeInput=(e)=>{
+        const{changeInputValue} = this.props;
+        this.setState({input:e.target.value});
+        changeInputValue(e.target.value.toLowerCase());
+    }
+    handleOpenAddModal=()=>this.setState({visible:true,modalType:'add'});
 
-    handleOpenEditModal=()=>{
-        this.setState({visible:true,edit:true});
-    }
+    handleOpenEditModal=()=>this.setState({visible:true,modalType:'edit'});
 
     closeModalAdd=()=>{
         this.setState({visible:false,edit:false});
@@ -86,14 +94,14 @@ class TopMenu extends Component{
                 }
                 </button>
                 <div className='search-block'>
-                    <input className='top-inpt' type='text' placeholder='name...' />
-                    <button className='btn'>search</button>
+                    <input className='top-inpt' type='text' placeholder='name...' onChange={this.handleChangeInput}/>
+                    <button className='btn' onClick={this.callHandleChangeInput}>search</button>
                 </div>
                 <button className='btn green' onClick={this.handleOpenAddModal}>Add</button>
                 <button className='btn yellow' onClick = {this.handleOpenEditModal}>edit</button>
             </div>
             <Rodal visible={this.state.visible} onClose={this.closeModalAdd.bind(this)} animation={'slideDown'}	duration={400} width={w} height={h} >
-                    <AddModal />
+                    {this.state.modalType ==='add' ? <AddModal />: <EditModal />}
             </Rodal>
             </>
         )
@@ -107,6 +115,7 @@ export default connect(state=>({
     changeRadioSkin,
     changeRadioSkinByDefault,
     changeCurrentMode,
+    changeInputValue,
     fetchRadioListRequest,
     fetchFavRadioListRequest
 })(TopMenu);

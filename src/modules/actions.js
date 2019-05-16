@@ -4,7 +4,9 @@ export const changeRadioSkin = createAction('SKIN/CHANGE_COLOR');
 export const changeRadioSkinByDefault = createAction('SKIN/CHANGE_COLOR_BY_DEFAULT');
 
 export const changeCurrentStation = createAction('STATION/CHANGE_RADIO_STATION');
-export const changeCurrentMode = createAction('MODE/CHANGE_CURRENT_MODE'); 
+export const changeCurrentMode = createAction('MODE/CHANGE_CURRENT_MODE');
+export const changeInputValue = createAction('INPUT/CHANGE_INPUT');
+
 
 
 export const fetchRadioListRequest = createAction('RADIO/FETCH_RADIOSTATION');

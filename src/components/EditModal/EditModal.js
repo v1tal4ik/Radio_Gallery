@@ -2,17 +2,17 @@ import React,{Component} from 'react';
 import Rodal from 'rodal';
 import { connect } from 'react-redux';
 import {getCurrentRadioStation,getListRadio} from '../../modules/reducers';
-import {addNewRadioStation} from '../../api';
-import './AddModal.css';
+import {editRadioStationById} from '../../api';
+import './EditModal.css';
 import 'rodal/lib/rodal.css';
 
 
-class AddModal extends Component{
+class EditModal extends Component{
 
     state={
         visible:false,
         message:'',
-        id:0,
+        id:'',
         name:'',
         image:'',
         stream:'',
@@ -21,7 +21,35 @@ class AddModal extends Component{
         statusImage:'/img/no-photo.png'
     }
 
-    changeInput=(e)=>(this.setState({[e.target.name]:e.target.value}));
+    static getDerivedStateFromProps(props,state){
+        const {currentStation:{id}, listRadio} = props;
+        if(id && listRadio.length){
+            if(state.mode==='edit'){
+                return state;
+            }else{
+             //Station ready for editing, load data for input
+            let arr = listRadio.map(item=>item.id==id?item:null);
+            let editStation;
+            arr.forEach((item)=>{
+                    if(item!==null){editStation=item};
+            });
+            //console.log(editStation);
+            return {...editStation,statusImage:editStation.image}
+            }
+        }
+        if(state.id==='0'){
+            //Its default value for state.(After closing message window)
+            return {...state};
+        }
+        if(id === 0){
+            //Station dont choosse, open modal window
+            return {visible:true,message:`Choose Radio Station for editing, please!`};
+        }
+        return state;
+    }
+
+
+    changeInput=(e)=>(this.setState({[e.target.name]:e.target.value,mode:'edit'}));
 
     changeInputImage=(e)=>{
         //console.log(e.target.files[0]);
@@ -30,9 +58,8 @@ class AddModal extends Component{
 
     async handleSave(e){
         e.preventDefault();
-        document.body.style.cursor = 'wait';
-        const {name,image,stream,genres,favourite} = this.state;
-        let id = Math.floor(Math.random()*100000)
+        document.body.style.cursor = 'wait ';
+        const {id,name,image,stream,genres,favourite} = this.state;
         let obj = {
             id,
             name,
@@ -41,22 +68,23 @@ class AddModal extends Component{
             genres,
             favourite
         }
-        let result = await addNewRadioStation(obj);
-        document.body.style.cursor = 'pointer';
-        this.setState({visible:true,message:result});
+         let result = await editRadioStationById(obj);
+         document.body.style.cursor = 'pointer';
+         this.setState({visible:true,message:result});
     }
 
     closeModalMessage=()=>{
         this.setState({
             visible:false,
             message:'',
-            id:0,
+            id:'0',
             name:'',
             image:'',
             stream:'',
             genres:'',
             favourite:false,
-            statusImage:'/img/no-photo.png'
+            statusImage:'/img/no-photo.png',
+            mode:''
         });
       }
 
@@ -75,11 +103,11 @@ class AddModal extends Component{
                 </div>
                 <div className='add-modal-block'>
                     <img src={this.state.statusImage} alt='Load img'/>
-                    <input className='add-modal-inpt-img' onChange={this.changeInputImage} name="img" type="file" accept="image/*" />
+                    <input className='add-modal-inpt-img' onChange={this.changeInputImage} name="img" type="file"  accept="image/*" />
                 </div>
                 <div className='add-modal-block'>
                     <label className='add-modal-label'>Genres or small description</label>
-                    <textarea className="add-modal-inpt-genres" onChange={this.changeInput} name="genres" type="text" value={genres}  id="" cols="10" rows="4"></textarea>
+                    <textarea className="add-modal-inpt-genres" onChange={this.changeInput} name="genres" type="text" value={genres}  cols="10" rows="4"></textarea>
                 </div>
                 <button className='modal-btn' onClick={this.handleSave.bind(this)}>Save</button>
             </form>
@@ -94,4 +122,6 @@ class AddModal extends Component{
 export default connect(state=>({
     listRadio:getListRadio(state),
     currentStation:getCurrentRadioStation(state)
-}))(AddModal);
+}))(EditModal);
+
+

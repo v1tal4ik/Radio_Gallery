@@ -4,7 +4,7 @@ import Player from '../Player';
 import Preloader from '../Preloader/Preloader';
 import { connect } from 'react-redux';
 import {fetchRadioListRequest} from '../../modules/actions';
-import {getIsLoading,getSkin,getListRadio,getCurrentRadioStation} from '../../modules/reducers';
+import {getIsLoading,getSkin,getListRadio,getCurrentRadioStation,getinputValue} from '../../modules/reducers';
 import './RadiostationList.css';
 
 
@@ -29,7 +29,7 @@ class RadiostationList extends Component{
     }
  
     render(){
-        const {isLoading,skin,listRadio,currentStation:{name}} = this.props;
+        const {isLoading,inputValue,skin,listRadio,currentStation:{name}} = this.props;
         return (
             <div className="wrapper" style={{backgroundColor:`rgb(${skin})`}}>
                 <div className='radio-list' onScroll={this.baz}>
@@ -39,7 +39,14 @@ class RadiostationList extends Component{
                 listRadio.length > 0 ? 
                             listRadio.map(item=>{
                                 const {id,name,image,stream,genres,favourite} = item;
-                                return <RadiostationItem key={id} id={id} name={name} image={image} stream={stream} genres={genres} favourite={favourite} />
+                                if(inputValue){
+                                    if(item.name.toLowerCase().indexOf(inputValue)!==-1){
+                                        return <RadiostationItem key={id} id={id} name={name} image={image} stream={stream} genres={genres} favourite={favourite} />
+                                      }
+                                }else{
+                                    return <RadiostationItem key={id} id={id} name={name} image={image} stream={stream} genres={genres} favourite={favourite} />
+                                }
+                                return null;
                             }) : null
                 }
                 </div>
@@ -52,6 +59,7 @@ class RadiostationList extends Component{
 
 export default connect(state=>({
     isLoading:getIsLoading(state),
+    inputValue:getinputValue(state),
     skin:getSkin(state),
     listRadio:getListRadio(state),
     currentStation:getCurrentRadioStation(state)
