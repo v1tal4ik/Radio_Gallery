@@ -1,20 +1,35 @@
 import { takeEvery, put, call, fork } from 'redux-saga/effects';
 import {
-  fetchProductRequest,
+    fetchRadioListRequest,
+    fetchRadioListSuccess,
+    fetchRadioListFailure,
+    fetchFavRadioListRequest,
+    fetchFavRadioListSuccess,
+    fetchFavRadioListFailure
   } from './actions';
-import {} from '../../api';
+import {getListRadio,getFavListRadio} from '../api';
 
 
 function* fetchReducersWatcher() {
-  yield takeEvery(fetchProductRequest, fetchProductFlow);
+  yield takeEvery(fetchRadioListRequest, fetchRadioStationFlow);
+  yield takeEvery(fetchFavRadioListRequest, fetchFavRadioStationFlow);
 }
 
-export function* fetchProductFlow(action) {
+export function* fetchRadioStationFlow(action) {
   try{
-    const result = yield call(getProduct,action.payload);
-    yield put(fetchProductSuccess(result));
+    const result = yield call(getListRadio,action.payload);
+    yield put(fetchRadioListSuccess(result));
   } catch (error){
-    yield put(fetchProductFailure(error));
+    yield put(fetchRadioListFailure(error));
+  }
+}
+
+export function* fetchFavRadioStationFlow(action) {
+  try{
+    const result = yield call(getFavListRadio,action.payload);
+    yield put(fetchFavRadioListSuccess(result));
+  } catch (error){
+    yield put(fetchFavRadioListFailure(error));
   }
 }
 

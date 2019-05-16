@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-//import { fork } from 'redux-saga/effects';
-import {isLoading,inputValue,skin,currentStation,listRadio} from './reducers';
+import { fork } from 'redux-saga/effects';
+import sagas from './sagas';
+import {mode,isLoading,inputValue,skin,currentStation,listRadio} from './reducers';
 
 export default combineReducers({
+    mode,
     isLoading,
     listRadio,
     skin,
@@ -11,6 +13,5 @@ export default combineReducers({
 });
 
 export function* rootSaga() {
-    //yield fork(productsSagas);
-    //yield fork(currencySagas);
+    yield fork(sagas);
 }
