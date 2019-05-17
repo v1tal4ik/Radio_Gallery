@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Rodal from 'rodal';
 import { connect } from 'react-redux';
 import {getCurrentRadioStation,getListRadio} from '../../modules/reducers';
-import {addNewRadioStation} from '../../api';
+import {addNewRadioStation,saveImage} from '../../api';
 import './AddModal.css';
 import 'rodal/lib/rodal.css';
 
@@ -23,27 +23,30 @@ class AddModal extends Component{
 
     changeInput=(e)=>(this.setState({[e.target.name]:e.target.value}));
 
-    changeInputImage=(e)=>{
-        //console.log(e.target.files[0]);
-        //this.setState({image:e.target.value,statusImage:'/img/done.png'});
+    async changeInputImage(e){
+        let image = e.target.files[0];
+        let result = await saveImage(image);
+        this.setState({image:result,statusImage:result});
     }
 
     async handleSave(e){
-        e.preventDefault();
-        document.body.style.cursor = 'wait';
         const {name,image,stream,genres,favourite} = this.state;
-        let id = Math.floor(Math.random()*100000)
-        let obj = {
-            id,
-            name,
-            image,
-            stream,
-            genres,
-            favourite
+        if(name && stream){
+            e.preventDefault();
+            document.body.style.cursor = 'wait';
+            let id = Math.floor(Math.random()*100000)
+            let obj = {
+                id,
+                name,
+                image,
+                stream,
+                genres,
+                favourite
+            }
+            let result = await addNewRadioStation(obj);
+            document.body.style.cursor = 'pointer';
+            this.setState({visible:true,message:result});
         }
-        let result = await addNewRadioStation(obj);
-        document.body.style.cursor = 'pointer';
-        this.setState({visible:true,message:result});
     }
 
     closeModalMessage=()=>{
@@ -75,7 +78,7 @@ class AddModal extends Component{
                 </div>
                 <div className='add-modal-block'>
                     <img src={this.state.statusImage} alt='Load img'/>
-                    <input className='add-modal-inpt-img' onChange={this.changeInputImage} name="img" type="file" accept="image/*" />
+                    <input className='add-modal-inpt-img' onChange={this.changeInputImage.bind(this)} name="img" type="file" accept="image/*" />
                 </div>
                 <div className='add-modal-block'>
                     <label className='add-modal-label'>Genres or small description</label>

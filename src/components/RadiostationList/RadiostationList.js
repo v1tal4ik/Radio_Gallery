@@ -16,14 +16,29 @@ class RadiostationList extends Component{
         foo:0
     }
 
-    baz=(e)=>{
-        this.setState({foo:e.target.scrollTop});
+    // baz=(e)=>{
+    //     this.setState({foo:e.target.scrollTop});
+    // }
+
+    addFocus=(id)=>{
+        let arr = document.getElementsByClassName('radio-list-item');
+        for(let item of arr){
+            const itemId = item.getAttribute('data-id');
+            item.classList.remove('active');
+            if(id===itemId){
+                item.classList.add('active');
+            }
+        }
     }
     
+    componentDidUpdate=()=>{
+        const {currentStation:{id}} = this.props;
+        this.addFocus(id);
+    }
 
     componentDidMount=()=>{
         //console.log('work ',this.state.foo)
-        document.getElementsByClassName('radio-list')[0].scrollTop = this.state.foo;
+        //document.getElementsByClassName('radio-list')[0].scrollTop = this.state.foo;
         const {fetchRadioListRequest} = this.props;
         fetchRadioListRequest();
     }

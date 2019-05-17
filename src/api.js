@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-
+//All List
 export const getListRadio = ()=>{
     return fetch('/api/v1.0/listRadio',{
         method:'GET'
@@ -34,12 +34,25 @@ export const deleteRadioStation=(id)=>{
    })
    .then(result=>result.json())
    .then(result=>result)
-   .catch(err=>err);
+   .catch(err=>"Sorry there was error :(");
+}
+
+export const saveImage=(img)=>{
+   var formData = new FormData();
+   formData.append('image',img,img.name);
+   
+   return fetch('/api/v1.0/listRadio/image',{
+      method:"POST",
+      body:formData
+   })
+   .then(result=>result.json())
+   .then((result)=>result.path)
+   .catch(err=>"Sorry there was error :(");
 }
 
 
 
-
+//Favourite List
  export const getFavListRadio = ()=>{
     return fetch('/api/v1.0/listRadio/favourite',{
         method:'GET'
@@ -52,13 +65,13 @@ export const deleteRadioStation=(id)=>{
  export const addToFavourite=(id)=>{
     return axios.put(`/api/v1.0/listRadio/favourite/${id}`,{id})
     .then(result=>result.data)
-    .catch(err=>err);
+    .catch(err=>"Sorry there was error :(");
  }
 
  export const deleteToFavourite=(id)=>{
     return axios.patch(`/api/v1.0/listRadio/favourite/${id}`,{id})
     .then(result=>result.data)
-    .catch(err=>err);
+    .catch(err=>"Sorry there was error :(");
  }
 
 

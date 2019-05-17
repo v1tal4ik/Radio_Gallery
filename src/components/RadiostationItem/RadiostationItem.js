@@ -14,6 +14,7 @@ class RadiostationItem extends Component{
         visible:false,
         message:''
     }
+
     addFocus=(id)=>{
         let arr = document.getElementsByClassName('radio-list-item');
         for(let item of arr){
@@ -49,7 +50,7 @@ class RadiostationItem extends Component{
             name:nameStation,
             stream:src
         }
-        this.addFocus(id);
+        //this.addFocus(id);
         changeCurrentStation(params);
     }
 

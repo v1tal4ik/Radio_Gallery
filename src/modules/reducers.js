@@ -44,7 +44,8 @@ export const mode = handleActions({
 },'all list');
 
 export const inputValue = handleActions({
-    [fetchRadioListRequest] : ()=>[],
+    [fetchRadioListRequest] : ()=>'',
+    [fetchFavRadioListRequest] : ()=>'',
     [changeInputValue] : (_state,action)=>action.payload
     
 
