@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
             let old_path = files['image'].path;
             let new_path = path.join('./build/img/stationIcon', files['image'].name);
             fs.renameSync(old_path, new_path);
-            let res_path = new_path.substring(6)
+            let res_path = new_path.substring(6);
             res.send({path: res_path});
         }
     });
